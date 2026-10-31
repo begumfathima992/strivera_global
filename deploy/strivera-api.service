@@ -1,0 +1,19 @@
+# systemd unit for the Strivera Global form API.
+# Copy to /etc/systemd/system/strivera-api.service, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now strivera-api
+[Unit]
+Description=Strivera Global form API (Express)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/var/www/strivera/server
+EnvironmentFile=/var/www/strivera/server/.env
+ExecStart=/usr/bin/node src/index.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

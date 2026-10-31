@@ -1,0 +1,48 @@
+# Render Blueprint: creates the form API (Node web service) and the website (static site).
+# In Render: New + → Blueprint → pick this repo. Values marked `sync: false` are entered in the dashboard.
+services:
+  - type: web
+    name: strivera-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm ci --omit=dev
+    startCommand: node src/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: TRUST_PROXY
+        value: "1"
+      - key: RATE_LIMIT_MAX
+        value: "5"
+      - key: SITE_ORIGIN # e.g. https://strivera-site.onrender.com,https://www.yourdomain.co.uk
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_SECURE
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: MAIL_TO
+        sync: false
+
+  - type: web
+    name: strivera-site
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite # let React Router handle deep links such as /work/restaurant-platform
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL # e.g. https://strivera-api.onrender.com (no trailing slash)
+        sync: false
