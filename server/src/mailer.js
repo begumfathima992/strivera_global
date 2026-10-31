@@ -39,7 +39,7 @@ const rows = (data) =>
 
 export async function sendEnquiryEmails(kind, data) {
   const t = getTransporter();
-  const from = process.env.MAIL_FROM || 'Strivera Global <no-reply@example.com>';
+  const from = process.env.MAIL_FROM || 'Strivera Global <info@striveraglobal.co.uk>';
   const inbox = process.env.MAIL_TO;
   if (!inbox && process.env.NODE_ENV === 'production') throw new Error('MAIL_TO is not configured');
 
@@ -52,7 +52,7 @@ export async function sendEnquiryEmails(kind, data) {
   // 1. Notify the company inbox
   const internal = await t.sendMail({
     from,
-    to: inbox || 'inbox@example.com',
+    to: inbox || 'info@striveraglobal.co.uk',
     replyTo: `${data.name} <${data.email}>`,
     subject: `${label} from ${data.name} – ${data.service}`,
     text: `${label}\n\n${text}\n\nMessage:\n${data.message}`,

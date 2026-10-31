@@ -5,7 +5,7 @@ import Seo from '../components/Seo.jsx';
 import Icon from '../components/Icon.jsx';
 import QuoteForm from '../components/QuoteForm.jsx';
 import { PageHero } from '../components/Sections.jsx';
-import { company } from '../data/site.js';
+import { company, hasAddress } from '../data/site.js';
 import { getService } from '../data/services.js';
 
 export default function Contact() {
@@ -47,7 +47,7 @@ export default function Contact() {
             <Col lg={5}>
               <div className="card-soft h-auto">
                 <h2 className="h3 mt-0">Contact details</h2>
-                {/* TODO: placeholders – edit src/data/site.js */}
+                {/* Contact details come from src/data/site.js */}
                 <ul className="check-list mt-3" style={{ gap: '1rem' }}>
                   <li><Icon name="email" /><span><strong>Email</strong><br /><a href={`mailto:${company.email}`}>{company.email}</a></span></li>
                   <li><Icon name="tel" /><span><strong>Phone</strong><br /><a href={`tel:${company.phoneHref}`}>{company.phone}</a></span></li>
@@ -57,12 +57,14 @@ export default function Contact() {
                       <a href={`https://wa.me/${company.whatsapp}`} target="_blank" rel="noopener noreferrer">Message us on WhatsApp<span className="visually-hidden"> (opens in a new tab)</span></a>
                     </span>
                   </li>
-                  <li>
-                    <Icon name="pin" />
-                    <span><strong>Address</strong><br />
-                      <address className="mb-0">{company.address.street}<br />{company.address.locality} {company.address.postcode}<br />{company.address.country}</address>
-                    </span>
-                  </li>
+                  {hasAddress && (
+                    <li>
+                      <Icon name="pin" />
+                      <span><strong>Address</strong><br />
+                        <address className="mb-0">{company.address.street}<br />{company.address.locality} {company.address.postcode}<br />{company.address.country}</address>
+                      </span>
+                    </li>
+                  )}
                   <li><Icon name="clock" /><span><strong>Hours</strong><br />{company.hours}</span></li>
                 </ul>
               </div>

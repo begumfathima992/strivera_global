@@ -50,7 +50,7 @@ export default function QuoteForm({ variant = 'full', endpoint = 'quote', defaul
     } catch (err) {
       setStatus({
         type: 'error',
-        message: `${err.message} Please try again, or email us at ${company.email}.`
+        message: `${err.message} Please try again, email us at ${company.email} or call ${company.phone}.`
       });
     }
   };

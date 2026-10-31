@@ -12,11 +12,11 @@ import {
 import { services } from '../data/services.js';
 import { projects } from '../data/projects.js';
 import { faqs } from '../data/faqs.js';
-import { company } from '../data/site.js';
+import { company, hasAddress } from '../data/site.js';
 import { restaurantModules } from '../data/restaurant.js';
 import restaurantImg from '../assets/images/restaurant-dining.webp';
 
-// TODO: replace the placeholder address, phone, email and company details in src/data/site.js.
+// Structured data built from src/data/site.js. The address is only included once one is set there.
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -37,13 +37,15 @@ const jsonLd = [
     email: company.email,
     telephone: company.phoneHref,
     priceRange: '££',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: company.address.street,
-      addressLocality: company.address.locality,
-      postalCode: company.address.postcode,
-      addressCountry: 'GB'
-    },
+    ...(hasAddress && {
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: company.address.street,
+        addressLocality: company.address.locality,
+        postalCode: company.address.postcode,
+        addressCountry: 'GB'
+      }
+    }),
     areaServed: 'GB'
   }
 ];

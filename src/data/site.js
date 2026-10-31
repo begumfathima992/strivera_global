@@ -4,18 +4,18 @@
 export const company = {
   name: 'Strivera Global',
   tagline: 'Custom software, built to fit your business.',
-  // TODO: replace with the live domain (also update public/robots.txt and public/sitemap.xml).
-  url: 'https://www.striveraglobal.co.uk',
+  url: 'https://www.striveraglobal.co.uk', // live domain; also used for sitemap.xml and robots.txt
   email: 'info@striveraglobal.co.uk',
   phone: '+44 7810 676673',
   phoneHref: '+447810676673', // same number, no spaces, for tel: links
-  whatsapp: '447810676673', // WhatsApp number in international format, digits only (TODO: confirm it is on WhatsApp)
+  whatsapp: '447810676673', // WhatsApp number in international format, digits only
   companyNumber: 'TODO', // TODO: Companies House registration number
   registeredIn: 'England and Wales', // TODO: confirm
+  // Public address. Leave street empty to hide the address everywhere (footer, Contact page, structured data).
   address: {
-    street: 'TODO Street Address', // TODO
-    locality: 'London', // TODO
-    postcode: 'TODO', // TODO
+    street: '', // TODO: add when there is a public address
+    locality: '',
+    postcode: '',
     country: 'United Kingdom'
   },
   hours: 'Monday to Friday, 9am to 6pm', // TODO: confirm opening hours
@@ -27,6 +27,9 @@ export const company = {
     { label: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/' }
   ]
 };
+
+// True only when a public street address has been entered above.
+export const hasAddress = Boolean(company.address.street.trim());
 
 export const pricingClaim = 'up to 25% below typical UK agency rates';
 export const pricingFootnote =

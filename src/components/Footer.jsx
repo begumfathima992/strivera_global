@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import BrandMark from './BrandMark.jsx';
 import Icon from './Icon.jsx';
-import { company, navLinks } from '../data/site.js';
+import { company, navLinks, hasAddress } from '../data/site.js';
 import { services } from '../data/services.js';
 
 export default function Footer() {
@@ -45,16 +45,18 @@ export default function Footer() {
           </Col>
           <Col lg={3}>
             <h2>Contact</h2>
-            {/* TODO: company contact details are placeholders – edit src/data/site.js */}
+            {/* Contact details come from src/data/site.js */}
             <ul className="footer-contact">
               <li><Icon name="email" /><a href={`mailto:${company.email}`}>{company.email}</a></li>
               <li><Icon name="tel" /><a href={`tel:${company.phoneHref}`}>{company.phone}</a></li>
-              <li>
-                <Icon name="pin" />
-                <address className="mb-0">
-                  {company.address.street}, {company.address.locality}, {company.address.postcode}, {company.address.country}
-                </address>
-              </li>
+              {hasAddress && (
+                <li>
+                  <Icon name="pin" />
+                  <address className="mb-0">
+                    {[company.address.street, company.address.locality, company.address.postcode, company.address.country].filter(Boolean).join(', ')}
+                  </address>
+                </li>
+              )}
               <li><Icon name="clock" /><span>{company.hours}</span></li>
             </ul>
           </Col>

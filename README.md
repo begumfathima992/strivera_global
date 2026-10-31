@@ -75,13 +75,13 @@ Real values go in `server/.env`, which is git-ignored. `server/.env.example` con
 | --- | --- | --- |
 | `NODE_ENV` | `production` | In production, missing SMTP settings cause an error instead of console logging |
 | `PORT` | `5001` | Port the API listens on (localhost only) |
-| `SITE_ORIGIN` | `https://www.example.co.uk,https://example.co.uk` | Comma-separated origins allowed by CORS |
+| `SITE_ORIGIN` | `https://www.striveraglobal.co.uk,https://striveraglobal.co.uk` | Comma-separated origins allowed by CORS |
 | `TRUST_PROXY` | `1` | Proxies in front of the app (1 behind Nginx), so rate limiting sees real IPs |
 | `RATE_LIMIT_MAX` | `5` | Form submissions allowed per IP per 15 minutes |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_SECURE` | `smtp.office365.com` / `587` / `false` | Your mail provider's SMTP server (`SMTP_SECURE=true` for port 465) |
 | `SMTP_USER` / `SMTP_PASS` | | SMTP login (use an app password where your provider offers one) |
-| `MAIL_FROM` | `"Strivera Global <no-reply@yourdomain>"` | Sender address. It must be allowed by your provider (SPF/DKIM) |
-| `MAIL_TO` | `hello@yourdomain` | Company inbox that receives enquiries |
+| `MAIL_FROM` | `"Strivera Global <info@striveraglobal.co.uk>"` | Sender address. It must be allowed by your provider (SPF/DKIM) |
+| `MAIL_TO` | `info@striveraglobal.co.uk` | Company inbox that receives enquiries |
 
 Optional frontend variable (root `.env`, see `.env.example`): `VITE_API_URL`. Leave it empty when Nginx serves the site and the API on the same domain.
 
