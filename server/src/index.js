@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { enquirySchema } from './validation.js';
-import { sendEnquiryEmails } from './mailer.js';
+import { sendEnquiryEmails, getMailTransportName } from './mailer.js';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 5001;
@@ -80,4 +80,5 @@ app.use((err, _req, res, _next) => {
 
 app.listen(PORT, HOST, () => {
   console.log(`Strivera Global API listening on http://${HOST}:${PORT} (allowed origins: ${allowedOrigins.join(', ')})`);
+  console.log(`[mailer] transport: ${getMailTransportName()}`);
 });

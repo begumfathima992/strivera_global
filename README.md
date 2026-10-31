@@ -47,7 +47,7 @@ npm run dev            # http://127.0.0.1:5001
 ```
 
 In development, Vite forwards `/api/*` to the Express server (see `vite.config.js`).
-If `SMTP_HOST` is left empty and `NODE_ENV` is not `production`, the server **logs emails to the console instead of sending them**, so you can test the forms without credentials.
+If both `RESEND_API_KEY` and `SMTP_HOST` are left empty and `NODE_ENV` is not `production`, the server **logs emails to the console instead of sending them**, so you can test the forms without credentials.
 
 For local development set these in `server/.env`:
 
@@ -73,13 +73,14 @@ Real values go in `server/.env`, which is git-ignored. `server/.env.example` con
 
 | Variable | Example | Purpose |
 | --- | --- | --- |
-| `NODE_ENV` | `production` | In production, missing SMTP settings cause an error instead of console logging |
+| `NODE_ENV` | `production` | In production, missing mail settings cause an error instead of console logging |
 | `PORT` | `5001` | Port the API listens on (localhost only) |
 | `SITE_ORIGIN` | `https://www.striveraglobal.co.uk,https://striveraglobal.co.uk` | Comma-separated origins allowed by CORS |
 | `TRUST_PROXY` | `1` | Proxies in front of the app (1 behind Nginx), so rate limiting sees real IPs |
 | `RATE_LIMIT_MAX` | `5` | Form submissions allowed per IP per 15 minutes |
-| `SMTP_HOST` / `SMTP_PORT` / `SMTP_SECURE` | `smtp.office365.com` / `587` / `false` | Your mail provider's SMTP server (`SMTP_SECURE=true` for port 465) |
-| `SMTP_USER` / `SMTP_PASS` | | SMTP login (use an app password where your provider offers one) |
+| `RESEND_API_KEY` | `re_…` | [Resend](https://resend.com) API key. When set, emails go through Resend's HTTPS API and all `SMTP_*` variables are optional and ignored. Recommended on Render, whose free instances block outbound SMTP ports. The `MAIL_FROM` domain must be verified in Resend |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_SECURE` | `smtp.office365.com` / `587` / `false` | Only used when `RESEND_API_KEY` is empty. Your mail provider's SMTP server (`SMTP_SECURE=true` for port 465) |
+| `SMTP_USER` / `SMTP_PASS` | | Only used when `RESEND_API_KEY` is empty. SMTP login (use an app password where your provider offers one) |
 | `MAIL_FROM` | `"Strivera Global <info@striveraglobal.co.uk>"` | Sender address. It must be allowed by your provider (SPF/DKIM) |
 | `MAIL_TO` | `info@striveraglobal.co.uk` | Company inbox that receives enquiries |
 
@@ -91,7 +92,7 @@ Optional frontend variable (root `.env`, see `.env.example`): `VITE_API_URL`. Le
 
 1. Validate the body with zod (`server/src/validation.js`; mirrors `src/lib/formSchema.js`).
 2. If the hidden honeypot field `website` is filled in, return success without sending anything.
-3. Email the enquiry to `MAIL_TO` (reply-to set to the customer), then send a confirmation email to the customer.
+3. Email the enquiry to `MAIL_TO` (reply-to set to the customer), then send a confirmation email to the customer. If only the confirmation fails, the error is logged and the visitor still sees success, because the enquiry was delivered. At startup the server logs which transport is active (`resend-api`, `smtp` or `console`).
 
 Protection: `helmet`, CORS restricted to `SITE_ORIGIN`, `express-rate-limit`, 20 KB JSON body limit, honeypot, and HTML-escaping of user input in emails.
 

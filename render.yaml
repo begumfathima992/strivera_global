@@ -19,7 +19,9 @@ services:
         value: "5"
       - key: SITE_ORIGIN # e.g. https://strivera-site.onrender.com,https://www.yourdomain.co.uk
         sync: false
-      - key: SMTP_HOST
+      - key: RESEND_API_KEY # Resend HTTP API (recommended on Render; free instances block SMTP ports). When set, SMTP_* is not needed.
+        sync: false
+      - key: SMTP_HOST # optional fallback when RESEND_API_KEY is not set
         sync: false
       - key: SMTP_PORT
         sync: false
