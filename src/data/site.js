@@ -6,10 +6,10 @@ export const company = {
   tagline: 'Custom software, built to fit your business.',
   // TODO: replace with the live domain (also update public/robots.txt and public/sitemap.xml).
   url: 'https://www.striveraglobal.co.uk',
-  email: 'hello@striveraglobal.co.uk', // TODO: confirm company inbox
-  phone: '+44 (0)20 0000 0000', // TODO: real phone number
-  phoneHref: '+442000000000', // TODO: same number, digits only, for tel: links
-  whatsapp: '442000000000', // TODO: WhatsApp number in international format, digits only
+  email: 'info@striveraglobal.co.uk',
+  phone: '+44 7810 676673',
+  phoneHref: '+447810676673', // same number, no spaces, for tel: links
+  whatsapp: '447810676673', // WhatsApp number in international format, digits only (TODO: confirm it is on WhatsApp)
   companyNumber: 'TODO', // TODO: Companies House registration number
   registeredIn: 'England and Wales', // TODO: confirm
   address: {
